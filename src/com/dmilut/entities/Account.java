@@ -29,8 +29,12 @@ public class Account {
 
     public double getBalance() {
         double balance = 0;
-        for(Transaction transaction : transactions) {
-            balance = balance + transaction.getAmount();
+        for (Transaction transaction : transactions) {
+            if (transaction.getType().equals(TransactionType.DEBIT)) {
+                balance = balance - transaction.getAmount();
+            } else {
+                balance = balance + transaction.getAmount();
+            }
         }
 
         return balance;

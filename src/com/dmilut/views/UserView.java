@@ -1,14 +1,19 @@
 package com.dmilut.views;
 
 import com.dmilut.controllers.AccountController;
+import com.dmilut.controllers.TransactionController;
 import com.dmilut.controllers.UserController;
 import com.dmilut.entities.Account;
 import com.dmilut.entities.AccountType;
+import com.dmilut.entities.Transaction;
 import com.dmilut.entities.User;
+
+import java.util.ArrayList;
 
 public class UserView {
     private final UserController userController = new UserController();
     private final AccountController accountController = new AccountController();
+    private final TransactionController transactionController = new TransactionController();
 
     public void printUserInfo(User user) {
         System.out.println("First name = " + user.getFirstName());
@@ -34,8 +39,15 @@ public class UserView {
         System.out.println("  5) Quit");
     }
 
-    public void printAccountTransactionHistory(AccountType accountType) {
+    public void printAccountTransactionHistory(User user, AccountType accountType) {
         System.out.println("Account transaction history" + accountType);
+        ArrayList<Transaction> transactions = transactionController
+                .getTransactionsByUserIdAndAccountType(user.getId(), accountType);
+        for (Transaction transaction : transactions) {
+            System.out.println("Id = " + transaction.getId() + " ; amount = " + transaction.getAmount() +
+                    " ; type = " + transaction.getType() + " ; timestamp = " + transaction.getTimestamp() +
+                    " ; purpose = " + transaction.getPurpose());
+        }
     }
 
     public void printWithdrawMenu(AccountType accountType) {

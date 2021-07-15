@@ -66,7 +66,36 @@ public class App {
 
             switch (userChoice) {
                 case 1:
-                    userView.printAccountTransactionHistory(accountType);
+                    userAccountTransactionHistoryCycle(accountType);
+                    break;
+                case 2:
+                    userView.printWithdrawMenu(accountType);
+                    break;
+                case 3:
+                    userView.printDepositMenu(accountType);
+                    break;
+                case 4:
+                    userView.printTransferMenu(accountType);
+                    break;
+                case 5:
+                    //
+                    break;
+                default:
+                    System.out.println("Error!");
+            }
+        } while (userChoice != 5);
+    }
+
+    private static void userAccountTransactionHistoryCycle(AccountType accountType) {
+        int userChoice;
+        do {
+            userView.printUserInfo(currentUser);
+            userView.printAccountTransactionHistory(currentUser, accountType);
+            userChoice = Utils.getUserChoice();
+
+            switch (userChoice) {
+                case 1:
+                    userView.printAccountTransactionHistory(currentUser, accountType);
                     break;
                 case 2:
                     userView.printWithdrawMenu(accountType);

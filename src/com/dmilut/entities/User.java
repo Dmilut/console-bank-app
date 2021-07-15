@@ -14,7 +14,7 @@ public class User {
     private ArrayList<Account> accounts;
 
     public User(String firstName, String lastName) {
-        id = Storage.getNewId();
+        id = Storage.getNewUserId();
         this.firstName = firstName;
         this.lastName = lastName;
         accounts = new ArrayList<>();

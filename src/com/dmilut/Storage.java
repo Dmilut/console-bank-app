@@ -22,16 +22,16 @@ public class Storage {
         if (users.size() > 0) {
             return users.get(users.size() - 1).getId() + 1;
         }
-        return 0;
+        return 1;
     }
 
     public static long getNewTransactionId() {
         ArrayList<User> users = getUsers();
-        long lastId = 0;
+        long lastId = 1;
         for (User user : users) {
             for (Account account : user.getAccounts()) {
                 for (Transaction transaction : account.getTransactions()) {
-                    if (transaction.getId() > lastId) {
+                    if (transaction.getId() >= lastId) {
                         lastId = transaction.getId() + 1;
                     }
                 }
