@@ -1,10 +1,7 @@
 package com.dmilut.utils;
 
 import com.dmilut.Storage;
-import com.dmilut.entities.Account;
-import com.dmilut.entities.AccountType;
-import com.dmilut.entities.Transaction;
-import com.dmilut.entities.User;
+import com.dmilut.entities.*;
 
 public class Initializer {
 
@@ -15,8 +12,8 @@ public class Initializer {
 
         Account checkingAccount = new Account(AccountType.CHECKING);
         Account savingAccount = new Account(AccountType.SAVING);
-        checkingAccount.getTransactions().add(new Transaction(300.50));
-        savingAccount.getTransactions().add(new Transaction(-50.25));
+        checkingAccount.getTransactions().add(new Transaction(TransactionType.CREDIT, 300.50));
+        savingAccount.getTransactions().add(new Transaction(TransactionType.DEBIT, 50.25));
 
         user.getAccounts().add(checkingAccount);
         user.getAccounts().add(savingAccount);
