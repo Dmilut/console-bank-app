@@ -4,7 +4,6 @@ import com.dmilut.controllers.AccountController;
 import com.dmilut.controllers.TransactionController;
 import com.dmilut.controllers.UserController;
 import com.dmilut.entities.Account;
-import com.dmilut.entities.AccountType;
 import com.dmilut.entities.Transaction;
 import com.dmilut.entities.User;
 
@@ -18,16 +17,15 @@ public class UserView {
     public void printUserInfo(User user) {
         System.out.println("First name = " + user.getFirstName());
         System.out.println("Last name = " + user.getLastName());
-        for (Account account : accountController.getAccountsByUserId(user.getId())) {
-            System.out.println("Account type = " + account.getType() + " balance = " + account.getBalance());
+        System.out.println("Accounts");
+        for (Account account : accountController.getByUserId(user.getId())) {
+            System.out.println("Id = " + account.getId() + " type = " + account.getType() + " balance = " + account.getBalance());
         }
     }
 
     public void printUserAccountsMenu() {
-        System.out.println("What would you like to do?");
-        System.out.println("1 - Checking");
-        System.out.println("2 - Saving");
-        System.out.println("3 - Exit to User menu");
+        System.out.println("To select an account please enter account ID");
+        System.out.println("  0) Quit");
     }
 
     public void printUserAccountMenu() {
@@ -36,31 +34,32 @@ public class UserView {
         System.out.println("  2) Withdraw");
         System.out.println("  3) Deposit");
         System.out.println("  4) Transfer");
-        System.out.println("  5) Quit");
+        System.out.println("  0) Quit");
     }
 
-    public void printAccountTransactionHistory(User user, AccountType accountType) {
-        System.out.println("Account transaction history" + accountType);
-        ArrayList<Transaction> transactions = transactionController
-                .getTransactionsByUserIdAndAccountType(user.getId(), accountType);
+    public void printAccountTransactionHistory(long accountId) {
+        System.out.println("Account transaction history " + accountId);
+        ArrayList<Transaction> transactions = transactionController.getTransactionsByAccountId(accountId);
+
         for (Transaction transaction : transactions) {
             System.out.println("Id = " + transaction.getId() + " ; amount = " + transaction.getAmount() +
                     " ; type = " + transaction.getType() + " ; timestamp = " + transaction.getTimestamp() +
                     " ; purpose = " + transaction.getPurpose());
         }
+
+        System.out.println("  0) Quit");
     }
 
-    public void printWithdrawMenu(AccountType accountType) {
-        System.out.println("Withdraw" + accountType);
+    public void printWithdrawMenu(long accountId) {
+        System.out.println("Withdraw " + accountId);
     }
 
-    public void printDepositMenu(AccountType accountType) {
-        System.out.println("Deposit" + accountType);
+    public void printDepositMenu(long accountId) {
+        System.out.println("Deposit " + accountId);
     }
 
-    public void printTransferMenu(AccountType accountType) {
-        System.out.println("Transfer" + accountType);
+    public void printTransferMenu(long accountId) {
+        System.out.println("Transfer " + accountId);
     }
-
 
 }

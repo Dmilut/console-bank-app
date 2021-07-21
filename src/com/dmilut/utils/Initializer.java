@@ -9,15 +9,16 @@ public class Initializer {
         User user = new User("John", "Wick");
         user.setLogin("test");
         user.setPassword("123");
+        Storage.getUsers().add(user);
 
         Account checkingAccount = new Account(AccountType.CHECKING);
-        Account savingAccount = new Account(AccountType.SAVING);
         checkingAccount.getTransactions().add(new Transaction(TransactionType.CREDIT, 300.50));
-        savingAccount.getTransactions().add(new Transaction(TransactionType.DEBIT, 50.25));
-
         user.getAccounts().add(checkingAccount);
+
+        Account savingAccount = new Account(AccountType.SAVING);
+        savingAccount.getTransactions().add(new Transaction(TransactionType.DEBIT, 50.25));
         user.getAccounts().add(savingAccount);
 
-        Storage.getUsers().add(user);
+
     }
 }

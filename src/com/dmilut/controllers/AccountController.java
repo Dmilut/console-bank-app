@@ -11,21 +11,27 @@ import java.util.ArrayList;
 public class AccountController {
     private final AccountDAO accountDAO = new AccountDAO();
 
-    public Account getAccountByUserIdAndType(long id, AccountType type) {
-        return accountDAO.getAccountByUserIdAndType(id, type);
+    public Account getById(long accountId) {
+        return accountDAO.getById(accountId);
     }
 
-    public ArrayList<Account> getAccountsByUserId(long id) {
-        return accountDAO.getAccountsByUserId(id);
+/*    public Account getByUserIdAndType(long userId, AccountType type) {
+        return accountDAO.getAccountByUserIdAndType(userId, type);
+    }*/
+
+    public ArrayList<Account> getByUserId(long userId) {
+        return accountDAO.getAccountsByUserId(userId);
     }
 
-    public void withdraw(long id, double amount, AccountType type) {
-        getAccountByUserIdAndType(id, type).getTransactions().add(new Transaction(TransactionType.DEBIT, amount));
+    public void withdraw(long accountId, double amount) {
+        getById(accountId).getTransactions().add(new Transaction(TransactionType.DEBIT, amount));
 
     }
 
-    public void deposit(long id, double amount, AccountType type) {
-        getAccountByUserIdAndType(id, type).getTransactions().add(new Transaction(TransactionType.CREDIT, amount));
+    public void deposit(long accountId, double amount) {
+        getById(accountId).getTransactions().add(new Transaction(TransactionType.CREDIT, amount));
 
     }
+
+
 }
