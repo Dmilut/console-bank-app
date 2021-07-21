@@ -15,10 +15,6 @@ public class AccountController {
         return accountDAO.getById(accountId);
     }
 
-/*    public Account getByUserIdAndType(long userId, AccountType type) {
-        return accountDAO.getAccountByUserIdAndType(userId, type);
-    }*/
-
     public ArrayList<Account> getByUserId(long userId) {
         return accountDAO.getAccountsByUserId(userId);
     }
@@ -33,5 +29,8 @@ public class AccountController {
 
     }
 
-
+    public void transfer(long accountIdFrom, long accountIdTo, double amount) {
+        getById(accountIdFrom).getTransactions().add(new Transaction(TransactionType.DEBIT, amount));
+        getById(accountIdTo).getTransactions().add(new Transaction(TransactionType.CREDIT, amount));
+    }
 }

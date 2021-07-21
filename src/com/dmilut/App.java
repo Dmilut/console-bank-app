@@ -1,8 +1,6 @@
 package com.dmilut;
 
 import com.dmilut.controllers.AccountController;
-import com.dmilut.entities.Account;
-import com.dmilut.entities.AccountType;
 import com.dmilut.entities.User;
 import com.dmilut.utils.Initializer;
 import com.dmilut.utils.Utils;
@@ -14,8 +12,6 @@ public class App {
     private static UserView userView;
     private static AccountController accountController;
     private static User currentUser;
-    private static Account currentAccount;
-    //private static int userChoice;
 
     public static void main(String[] args) {
         new Initializer().init();
@@ -41,6 +37,7 @@ public class App {
 
     private static void userCycle() {
         int userChoice;
+
         do {
             userView.printUserInfo(currentUser);
             userView.printUserAccountsMenu();
@@ -55,34 +52,35 @@ public class App {
 
     private static void userAccountCycle(long accountId) {
         int userChoice;
-        do {
-            userView.printUserAccountMenu();
-            userChoice = Utils.getUserChoice();
 
-            switch (userChoice) {
-                case 1:
-                    userAccountTransactionHistoryCycle(accountId);
-                    break;
-                case 2:
-                    withdrawCycle(accountId);
-                    break;
-                case 3:
-                    depositCycle(accountId);
-                    break;
-                case 4:
-                    userView.printTransferMenu(accountId);
-                    break;
-                case 5:
-                    //
-                    break;
-                default:
-                    System.out.println("Error!");
-            }
-        } while (userChoice != 0);
+        userView.printUserAccountMenu();
+        userChoice = Utils.getUserChoice();
+
+        switch (userChoice) {
+            case 1:
+                userAccountTransactionHistoryCycle(accountId);
+                break;
+            case 2:
+                withdrawCycle(accountId);
+                break;
+            case 3:
+                depositCycle(accountId);
+                break;
+            case 4:
+                transferCycle(accountId);
+                break;
+            case 0:
+                //
+                break;
+            default:
+                System.out.println("Error!");
+        }
+
     }
 
     private static void userAccountTransactionHistoryCycle(long accountId) {
         int userChoice;
+
         do {
             userView.printAccountTransactionHistory(accountId);
             userChoice = Utils.getUserChoice();
@@ -100,8 +98,6 @@ public class App {
 
         accountController = new AccountController();
         accountController.withdraw(accountId, amount);
-
-        userView.printUserInfo(currentUser);
     }
 
     private static void depositCycle(long accountId) {
@@ -112,8 +108,14 @@ public class App {
         accountController.deposit(accountId, amount);
     }
 
-    private static void transferCycle(AccountType accountType) {
+    private static void transferCycle(long accountIdFrom) {
+        userView.printTransferMenu(currentUser.getId(), accountIdFrom);
+        long accountIdTo = Utils.getUserChoice();
+        userView.printSelectAmount();
+        double amount = Utils.getUserInput();
 
+        accountController = new AccountController();
+        accountController.transfer(accountIdFrom, accountIdTo, amount);
     }
 
 }

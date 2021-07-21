@@ -58,8 +58,19 @@ public class UserView {
         System.out.println("Deposit " + accountId);
     }
 
-    public void printTransferMenu(long accountId) {
+    public void printTransferMenu(long userId, long accountId) {
         System.out.println("Transfer " + accountId);
+
+        for (Account account : accountController.getByUserId(userId)) {
+            System.out.println("Id = " + account.getId() + " type = " + account.getType() + " balance = " + account.getBalance());
+        }
+
+        System.out.println("To select the recipient's account, please enter an account ID");
+        System.out.println("  0) Quit");
+    }
+
+    public void printSelectAmount() {
+        System.out.println("Enter amount");
     }
 
 }
