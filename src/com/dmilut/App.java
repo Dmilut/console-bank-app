@@ -1,5 +1,6 @@
 package com.dmilut;
 
+import com.dmilut.controllers.AccountController;
 import com.dmilut.entities.AccountType;
 import com.dmilut.entities.User;
 import com.dmilut.utils.Initializer;
@@ -10,6 +11,7 @@ import com.dmilut.views.UserView;
 public class App {
     private static MainView mainView;
     private static UserView userView;
+    private static AccountController accountController;
     private static User currentUser;
 
     public static void main(String[] args) {
@@ -69,10 +71,10 @@ public class App {
                     userAccountTransactionHistoryCycle(accountType);
                     break;
                 case 2:
-                    userView.printWithdrawMenu(accountType);
+                    withdrawCycle(accountType);
                     break;
                 case 3:
-                    userView.printDepositMenu(accountType);
+                    depositCycle(accountType);
                     break;
                 case 4:
                     userView.printTransferMenu(accountType);
@@ -114,5 +116,28 @@ public class App {
             }
         } while (userChoice != 5);
     }
+
+    private static void withdrawCycle(AccountType accountType) {
+        userView.printWithdrawMenu(accountType);
+        double amount = Utils.getUserInput();
+
+        accountController = new AccountController();
+        accountController.withdraw(currentUser.getId(), amount, accountType);
+
+        userView.printUserInfo(currentUser);
+    }
+
+    private static void depositCycle(AccountType accountType) {
+        userView.printDepositMenu(accountType);
+        double amount = Utils.getUserInput();
+
+        accountController = new AccountController();
+        accountController.deposit(currentUser.getId(), amount, accountType);
+    }
+
+    private static void transferCycle(AccountType accountType) {
+
+    }
+
 }
 
